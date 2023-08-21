@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+
+void rearrangeArray(std::vector<int>& inputArray) {
+    int n = inputArray.size();
+    if (n <= 1) {
+        return; // Nothing to rearrange for an empty or single-element array.
+    }
+
+    int i = 0; // Pointer for positive numbers
+    int j = 1; // Pointer for negative numbers
+
+    while (i < n && j < n) {
+        // Find the next positive number at an even index
+        while (i < n && inputArray[i] >= 0) {
+            i += 2;
+        }
+
+        // Find the next negative number at an odd index
+        while (j < n && inputArray[j] < 0) {
+            j += 2;
+        }
+
+        if (i < n && j < n) {
+            // Swap the positive number at even index with the negative number at odd index
+            std::swap(inputArray[i], inputArray[j]);
+        }
+    }
+}
+
+int main() {
+    std::vector<int> inputArray = {-3, 1, 2, 4, -6, 8, -8, -1};
+    
+    rearrangeArray(inputArray);
+    
+    // Print the result
+    for (int num : inputArray) {
+        std::cout << num << " ";
+    }
+    
+    return 0;
+}
+// Time complexcity O(n) and Space complexcity O(1)
