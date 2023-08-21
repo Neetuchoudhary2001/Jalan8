@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+class Guest {
+private:
+    std::string name;
+    int age;
+
+public:
+    Guest(const std::string& _name, int _age) : name(_name), age(_age) {}
+
+    std::string getName() const {
+        return name;
+    }
+
+    int getAge() const {
+        return age;
+    }
+};
+
+class Ticket {
+private:
+    std::vector<Guest> guests;
+
+public:
+    void addGuest(const Guest& guest) {
+        guests.push_back(guest);
+    }
+
+    void displayTicketDetails() const {
+        for (size_t i = 0; i < guests.size(); ++i) {
+            std::cout << "Guest " << i + 1 << " (age: " << guests[i].getAge() << ")\n";
+        }
+    }
+
+    int calculateTotalCharges() const {
+        int totalCharges = 0;
+        for (const Guest& guest : guests) {
+            if (guest.getAge() <= 2) {
+                totalCharges += 0;
+            } else if (guest.getAge() < 18) {
+                totalCharges += 100;
+            } else if (guest.getAge() < 60) {
+                totalCharges += 500;
+            } else {
+                totalCharges += 300;
+            }
+        }
+        return totalCharges;
+    }
+};
+
+int main() {
+    int numGuests;
+    std::cout << "Enter the number of guests: ";
+    std::cin >> numGuests;
+
+    Ticket ticket;
+
+    for (int i = 0; i < numGuests; ++i) {
+        std::string name;
+        int age;
+        std::cout << "Enter the name of guest " << i + 1 << ": ";
+        std::cin >> name;
+        std::cout << "Enter the age of guest " << i + 1 << ": ";
+        std::cin >> age;
+
+        Guest guest(name, age);
+        ticket.addGuest(guest);
+    }
+
+    int totalCharges = ticket.calculateTotalCharges();
+
+    std::cout << "\nTicket Details:\n";
+    ticket.displayTicketDetails();
+
+    std::cout << "\nTotal Charges: INR " << totalCharges << "\n";
+
+    return 0;
+}
